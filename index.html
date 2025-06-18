@@ -1,25 +1,238 @@
-<script src="https://cdn.tailwindcss.com"></script>
-    
-
-
-    <div class="background-pattern">
-        
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rex’s Download Vault</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #000000;
+      height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      font-family: 'Orbitron', sans-serif;
+      color: #ffffff;
+      position: relative;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+    .neon-glow {
+      text-shadow: 0 0 10px #9f00cc, 0 0 20px #9f00cc, 0 0 30px #9f00cc;
+      animation: neonPulse 2s infinite alternate;
+    }
+    @keyframes neonPulse {
+      0% {
+        text-shadow: 0 0 5px #9f00cc, 0 0 10px #9f00cc;
+      }
+      100% {
+        text-shadow: 0 0 15px #9f00cc, 0 0 25px #9f00cc;
+      }
+    }
+    .background-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: float 10s infinite, fade 3s infinite;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(100vh);
+      }
+      100% {
+        transform: translateY(-20vh);
+      }
+    }
+    @keyframes fade {
+      0%,
+      100% {
+        opacity: 0.2;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .download-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background: #4b0082;
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      z-index: 3;
+    }
+    .download-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #9f00cc;
+    }
+    .extra-image {
+      max-width: 60%;
+      max-height: 30vh;
+      object-fit: contain;
+      z-index: 2;
+      margin-bottom: 100px;
+    }
+    .header-text {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      z-index: 2;
+      margin-bottom: 20px;
+    }
+    .faq-section {
+      max-width: 600px;
+      text-align: center;
+      margin-top: 0;
+    }
+    .covered-btn {
+      padding: 10px 20px;
+      background: #2a1a3f;
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+    }
+    .covered-btn:hover {
+      background: #4b0082;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #9f00cc;
+    }
+    .faq-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .faq-question {
+      color: #ffffff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 10px;
+      border-bottom: 1px solid #9f00cc;
+      transition: background-color 0.3s ease;
+      text-align: left;
+    }
+    .faq-question:hover {
+      background-color: #2a1a3f;
+      border-radius: 5px;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 10px;
+      color: #b3b3b3;
+      font-size: 1rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: max-height 0.5s ease-out, opacity 0.3s ease-out,
+        transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .faq-answer.open {
+      max-height: 200px;
+      padding: 10px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (min-width: 768px) {
+      .header-text {
+        font-size: 3.5rem;
+      }
+      .extra-image {
+        max-width: 40%;
+      }
+      .faq-title {
+        font-size: 2rem;
+      }
+      .covered-btn {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-pattern">
+    <script>
+      function createParticle() {
+        const particle = document.createElement("div");
+        const size = Math.random() * 3 + 1;
+        particle.className = "particle";
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        particle.style.animationDelay = `${Math.random() * 2}s`;
+        document.querySelector(".background-pattern").appendChild(particle);
+        setTimeout(() => particle.remove(), 10000);
+      }
+      for (let i = 0; i < 50; i++) createParticle();
+      setInterval(createParticle, 200);
+    </script>
+  </div>
+  <div class="content">
+    <div class="logo neon-glow">Rex</div>
+    <a href="files/yourfile.zip" download class="download-btn">Download</a>
+    <div class="header-text neon-glow">The Ultimate Download Vault. By Rex.</div>
+    <img src="images/extra-image.png" alt="Extra Image" class="extra-image" />
+    <div class="faq-section">
+      <a href="#" class="covered-btn">We’ve got you covered</a>
+      <h2 class="faq-title neon-glow">Frequently Asked Questions</h2>
+      <div class="faq-question" onclick="toggleAnswer('q1')">
+        What’s the official discord/telegram?
+      </div>
+      <div class="faq-answer" id="q1">
+        Join us at discord.gg/rexvault or t.me/rexvault. Stay in the loop, Boss!
+      </div>
+      <div class="faq-question" onclick="toggleAnswer('q2')">How much sUNC/UNC?</div>
+      <div class="faq-answer" id="q2">
+        Zero cost, straight up. This is free for you, courtesy of Rex.
+      </div>
+      <div class="faq-question" onclick="toggleAnswer('q3')">Why is this free?</div>
+      <div class="faq-answer" id="q3">
+        Because I run this show for loyalty, not profit. Take it and run.
+      </div>
+      <div class="faq-question" onclick="toggleAnswer('q4')">How do I contact the developer?</div>
+      <div class="faq-answer" id="q4">
+        Hit me up through the discord or telegram links above. I’m always around.
+      </div>
     </div>
-    <div class="content">
-        <div class="logo neon-glow">Rex</div>
-        <a href="https://example.com/yourfile.zip" download="myfile.zip" class="download-btn">Download</a>
-        <div class="header-text neon-glow">The Ultimate Download Vault. By Rex.</div>
-        <img src="https://via.placeholder.com/800x400?text=Extra+Image" alt="Extra Image" class="extra-image">
-        <div class="faq-section">
-            <a href="#" class="covered-btn">We’ve got you covered</a>
-            <h2 class="faq-title neon-glow">Frequently Asked Questions</h2>
-            <div class="faq-question" onclick="toggleAnswer('q1')">What’s the official discord/telegram?</div>
-            <div class="faq-answer" id="q1">Join us at discord.gg/rexvault or t.me/rexvault. Stay in the loop, Boss!</div>
-            <div class="faq-question" onclick="toggleAnswer('q2')">How much sUNC/UNC?</div>
-            <div class="faq-answer" id="q2">Zero cost, straight up. This is free for you, courtesy of Rex.</div>
-            <div class="faq-question" onclick="toggleAnswer('q3')">Why is this free?</div>
-            <div class="faq-answer" id="q3">Because I run this show for loyalty, not profit. Take it and run.</div>
-            <div class="faq-question" onclick="toggleAnswer('q4')">How do I contact the developer?</div>
-            <div class="faq-answer" id="q4">Hit me up through the discord or telegram links above. I’m always around.</div>
-        </div>
-    </div>
+  </div>
+
+  <script>
+    function toggleAnswer(id) {
+      const answer = document.getElementById(id);
+      answer.classList.toggle("open");
+    }
+  </script>
+</body>
+</html>
